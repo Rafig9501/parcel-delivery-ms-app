@@ -1,0 +1,35 @@
+server:
+  servlet:
+    context-path: /authentication
+  port: 8002
+spring:
+  application:
+    name: authentication-ms
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/changelog-master.yml
+    drop-first: false
+    database-change-log-table: USER_DB_CHANGELOG
+    database-change-log-lock-table: USER_DB_LOCK
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_DB_USERNAME:postgres}
+    password: ${POSTGRES_DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: authentication-ms
+    hibernate:
+      ddl-auto: none
+    show-sql: ${SHOW_SQL:true}
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+security:
+  jwt_token_issuer: ${ISSUER:PARCEL-APP}
+  jwt_access_token_expiration: ${ACCESS_TOKEN_EXPIRATION_MS:300000}
+  jwt_refresh_token_expiration: ${REFRESH_TOKEN_EXPIRATION_MS:86400000}
+  jwt_secret: ${JWT_TOKEN_SECRET:BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY}

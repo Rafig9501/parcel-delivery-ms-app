@@ -1,0 +1,48 @@
+server:
+  servlet:
+    context-path: /customer-ms
+  port: 8002
+spring:
+  application:
+    name: customer-ms
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/changelog-master.yml
+    drop-first: false
+    database-change-log-table: CUSTOMER_DB_CHANGELOG
+    database-change-log-lock-table: CUSTOMER_DB_LOCK
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_DB_USERNAME:postgres}
+    password: ${POSTGRES_DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: customer-ms
+    hibernate:
+      ddl-auto: none
+    show-sql: ${SHOW_SQL:true}
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  kafka:
+#    producer:
+#      properties:
+#        acks: all
+#        retries: 10
+#        retry.backoff.ms: 1000
+#        max.block.ms: 20000
+#        delivery.timeout.ms: 30000
+#    admin:
+#      properties:
+#        bootstrap.servers: ${KAFKA_HOST_NAME:http://localhost:9092}
+    bootstrap-servers: ${KAFKA_HOST_NAME:http://localhost:9092/}
+security:
+  password_encoder_strength: ${BCRYPT_PASSWORD_ENCODER_STRENGTH:10}
+  jwt_token_issuer: ${ISSUER:PARCEL-APP}
+  jwt_access_token_expiration: ${ACCESS_TOKEN_EXPIRATION_MS:300000}
+  jwt_refresh_token_expiration: ${REFRESH_TOKEN_EXPIRATION_MS:86400000}
+  jwt_secret: ${JWT_TOKEN_SECRET:dsanbhjbeyrbyehvdfhsa}

@@ -1,0 +1,32 @@
+server:
+  servlet:
+    context-path: /api-gateway-ms
+  port: 8002
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      enabled: true
+    config:
+      enabled: false
+  application:
+    name: api-gateway-ms
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_DB_USERNAME:postgres}
+    password: ${POSTGRES_DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: api-gateway-ms
+    hibernate:
+      ddl-auto: none
+    show-sql: ${SHOW_SQL:true}
+security:
+  password_encoder_strength: ${BCRYPT_PASSWORD_ENCODER_STRENGTH:10}
+  jwt_token_issuer: ${ISSUER:PARCEL-APP}
+  jwt_access_token_expiration: ${ACCESS_TOKEN_EXPIRATION_MS:300000}
+  jwt_refresh_token_expiration: ${REFRESH_TOKEN_EXPIRATION_MS:86400000}
+  jwt_secret: ${JWT_TOKEN_SECRET:BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY}

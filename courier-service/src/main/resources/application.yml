@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /courier-ms
+  port: 8002
+spring:
+  application:
+    name: courier-ms
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/changelog-master.yml
+    drop-first: false
+    database-change-log-table: COURIER_DB_CHANGELOG
+    database-change-log-lock-table: COURIER_DB_LOCK
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${POSTGRES_DB_USERNAME:postgres}
+    password: ${POSTGRES_DB_PASSWORD:postgres}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: courier-ms
+    hibernate:
+      ddl-auto: none
+    show-sql: ${SHOW_SQL:true}
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
